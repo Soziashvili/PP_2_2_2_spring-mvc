@@ -6,22 +6,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import web.service.UserService;
 import web.service.UserServiceImp;
 
 @Controller
 @RequestMapping("/cars")
 public class CarsController {
-    private UserService userService;
+    private UserServiceImp userServiceImp;
 
     @Autowired
-    public CarsController(UserService userService) {
-        this.userService = userService;
+    public CarsController(UserServiceImp userServiceImp) {
+        this.userServiceImp = userServiceImp;
     }
 
     @GetMapping()
     public String getCars(@RequestParam(name = "count", defaultValue = "5") int count, Model model) {
-        model.addAttribute("cars", userService.getListOfCars(count));
+        if (count > -1 && count < 5) {
+            model.addAttribute("cars", userServiceImp.getCarsQuantity(count));
+        } else {
+            model.addAttribute("cars", userServiceImp.listCars());
+        }
 
         return "cars/cars";
     }
