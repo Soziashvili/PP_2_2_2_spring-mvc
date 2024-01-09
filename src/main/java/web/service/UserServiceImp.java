@@ -21,8 +21,12 @@ public class UserServiceImp implements UserService {
         return carDao.listCars();
     }
 
-    public List<Car> getCarsQuantity(int count) {
-        return carDao.listCars().subList(0, count);
+    public List<Car> getListOfCars(int count) {
+        if (count > -1 && count < 5) {
+            return carDao.listCars().subList(0, count);
+        }
+
+        return carDao.listCars();
     }
 
 
