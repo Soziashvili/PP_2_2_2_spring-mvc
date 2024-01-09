@@ -11,16 +11,16 @@ import web.service.UserServiceImp;
 @Controller
 @RequestMapping("/cars")
 public class CarsController {
-    private UserServiceImp userServiceImp;
+    private UserService userService;
 
     @Autowired
-    public CarsController(UserServiceImp userServiceImp) {
-        this.userServiceImp = userServiceImp;
+    public CarsController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping()
     public String getCars(@RequestParam(name = "count", defaultValue = "5") int count, Model model) {
-        model.addAttribute("cars", userServiceImp.getListOfCars(count));
+        model.addAttribute("cars", userService.getListOfCars(count));
         
         return "cars/cars";
     }
